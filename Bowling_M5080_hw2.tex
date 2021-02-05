@@ -1,0 +1,165 @@
+\documentclass[11pt]{article}
+
+%%%%%%%%%%%%%%%%%%%
+% Page Layout
+%%%%%%%%%%%%%%%%%%%
+
+\setlength{\paperwidth}{8.5in} \setlength{\paperheight}{11in}
+\setlength{\marginparwidth}{0in} \setlength{\marginparsep}{0in}
+\setlength{\oddsidemargin}{0in} \setlength{\evensidemargin}{0in}
+\setlength{\textwidth}{6.5in} \setlength{\topmargin}{-0.5in}
+\setlength{\textheight}{9in}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Include Packages and Style Files
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[english]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{xcolor}
+\usepackage[useregional]{datetime2}
+%\usepackage[pdftex]{graphicx,color}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Define theorem environments
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem*{remark}{Remark}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Define new commands
+%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\R}{\mathbb{R}}
+
+
+\newcommand{\E}{\mathbb{E}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\1}[1]{\mathbf{1} \left \{ #1 \right \}}
+\newcommand{\Range}{\operatorname{Range}}
+
+%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\title{Math 5080 \\ Homework 2}
+\date{Due: Saturday, February 6th at 11:59 PM}
+\author{Magon Bowling}
+
+\maketitle
+
+\begin{itemize}
+
+\item [{\color{red} \textbf{6.17}}] Suppose that $X_1$ and $X_2$ are Gamma$(2, 1/2)$ random variables.
+\begin{enumerate}[(a)]
+\item Find the pdf of $Y = \sqrt{X_1 + X_2}$
+\end{enumerate}
+To find the distribution of $Y$, we use the Moment Generating Function.  Recall the MGF of a Gamma distribution is \(M(t) = (1-\theta t)^{-k} \ \text{for $t < \frac{1}{\theta}$}\).  If we let $Z = X_1 + X_2$, we get $Z \sim Gamma(2,1) \ \text{for} \ Z \in (0,\infty)$ as shown.
+\begin{align*}
+    \begin{split}
+        M_Z(t) &= M_{X_1}(t)M_{X_2}(t) \\
+        &= \bigg(\frac{2}{2 - t}\bigg)^{\frac{1}{2}} \bigg(\frac{2}{2 - t}\bigg)^{\frac{1}{2}} \\
+        &= \bigg(\frac{2}{2 - t}\bigg)
+    \end{split}
+\end{align*}
+
+Now that we know the distribution, we can do a one-dimensional transformation to obtain the pdf of $Y$.  This is done with \(\phi(x) = \sqrt{x} \), which is one-to-one and is increasing on $(0,\infty)$, so it's inverse is \(\phi^{-1}(x) = x^2\).  Now,
+\[f_{\phi (x)} (t) = f_X \big(\phi^{-1}(t)\big) \Big|(\phi^{-1)\prime}(t)\Big| \Rightarrow f_{\sqrt{X_1 + X_2}} (t) = f_{X_1 + X_2} (t^2)|2t| = \frac{e^{\frac{-t^2}{2}}}{2} (2t).\]
+Therefore,
+\[f_Y (y) = y \exp\big(-y^2/2\big) \ \text{for $y>0$ and $0$ otherwise.}\]
+
+\begin{enumerate}[(b)]
+\item Find the pdf of $W = X_1/X_2$
+\end{enumerate}
+I will let $V = X_1 + X_2$ and use a transformation of a joint pdf to solve for $f_W (w)$.
+\begin{enumerate}
+    \item Rewrite relations in little variables: \(w = \frac{x_1}{x_2} \ \text{and} \ v = x_1 + x_2\)
+    \item Solve for $x_1, x_2$ in terms of $v,w$:
+    \[w = \frac{x_1}{x_2} \Rightarrow x_1 = wx_2 \Rightarrow x_1 = \frac{vw}{1+w}\]
+    \[v = x_1 + x_2 \Rightarrow x_2 = v - x_1 \Rightarrow x_2 = v - wx_2 \Rightarrow x_2 = \frac{v}{1+w}\]
+    \item Compute the Jacobian:
+    \[J = \text{det}
+    \begin{pmatrix}
+    \frac{\partial x_1}{\partial v} & \frac{\partial x_1}{\partial } \\
+    \frac{\partial x_2}{\partial v} & \frac{\partial x_2}{\partial w}
+    \end{pmatrix} = \text{det}
+    \begin{bmatrix}
+    \frac{w}{1+w} & \frac{v(1+w)-vw}{(1+w)^2} \\
+    \frac{1}{1+w} & \frac{-v}{(1+w)^2}
+    \end{bmatrix} = \frac{-vw}{(1+w)^3} - \frac{v(1+w)-vw}{(1+w)^3} = \frac{v}{(1+w)^2}
+    \]
+    \item Then the formula for $f_{(V,W)}$ in terms of $f_{(X_1,X_2)}$ is \(f_{(V,W)} (v,w) = f_{(X_1,X_2)} (x_1,x_2) |J|\).
+    Recall the following pdf's:
+    \[f_{X_1} (x_1) = \frac{e^{\frac{-x_1}{2}}}{\sqrt{2\pi x_1}} \ \text{and} \ f_{X_2} (x_2) = \frac{e^{\frac{-x_2}{2}}}{\sqrt{2\pi x_2}} \Rightarrow f_{X_1,X_2} (x_1,x_2) = \frac{e^{\frac{-(x_1+x_2)}{2}}}{2\pi \sqrt{x_1 x_2}}\]
+    Now through substitution we have the following:
+    \begin{align*}
+        \begin{split}
+            f_{(V,W)} (v,w) &= \frac{\exp\big[-\big(\frac{vw}{1+w} + \frac{v}{1+w} \big)/2\big]}{2\pi \sqrt{\frac{vw}{1+w} \cdot \frac{v}{1+w}}} \Bigg|\frac{v}{(1+w)^2}\Bigg| \\
+            &= \frac{\exp\big[-\big(\frac{v(1+w)}{1+w} \big)/2\big]}{2\pi \sqrt{\frac{v^2}{(1+w)^2}} \cdot \sqrt{w}} \Bigg|\frac{v}{(1+w)^2}\Bigg| \\
+            &= \frac{e^{\frac{-v}{2}}}{2\pi \frac{v}{1+w} \sqrt{w}} \Bigg|\frac{v}{(1+w)^2}\Bigg| \\
+            &= \frac{e^{\frac{-v}{2}}}{2\pi (1+w) \sqrt{w}} \ \textbf{1}\{v>0, w>0\}
+        \end{split}
+    \end{align*}
+    \item The final step in solving for $f_W (w)$ is to integrate out $v$ from the joint pdf as follows:
+    \begin{align*}
+        \begin{split}
+            f_W (w) &= \int_0^{\infty} \frac{e^{\frac{-v}{2}}}{2\pi (1+w) \sqrt{w}} dv \\
+            &= \frac{-1}{\pi (1+w) \sqrt{w}} \int_0^{\infty} \frac{-1}{2} e^{\frac{-v}{2}} dv \\
+            &= \frac{-1}{\pi (1+w) \sqrt{w}} \Big(e^{\frac{-v}{2}} \Big|_0^{\infty}\Big) \\
+            &= \frac{-1}{\pi (1+w) \sqrt{w}} \big(0 - 1\big) \\
+            &= \frac{1}{\pi (1+w) \sqrt{w}} \ \textbf{1}\{w>0\}
+        \end{split}
+    \end{align*}
+\end{enumerate}
+
+\item [{\color{red} \textbf{6.26}}] Let $X_1$ and $X_2$ be independent negative binomial random variables $X_1 \sim NB(r_1, p)$ and $X_2 \sim NB(r_2, p)$.
+\begin{enumerate}[(a)]
+\item Find the MGF of $Y = X_1 + X_2$
+\end{enumerate}
+The MGF for $X_1 \sim NB(r_1, p)$ is:
+\[M_{X_1}(t) =
+\begin{cases}
+\Big(\frac{pe^t}{1 - (1 - p)e^t}\Big)^{r_1} &\text{for $t < -\log(1-p)$} \\ \infty& \text{otherwise.}
+\end{cases}
+\]
+The MGF for $X_2 \sim NB(r_2, p)$ is:
+\[M_{X_2}(t) =
+\begin{cases}
+\Big(\frac{pe^t}{1 - (1 - p)e^t}\Big)^{r_2} &\text{for $t < -\log(1-p)$} \\ \infty& \text{otherwise.}
+\end{cases}
+\]
+Therefore, the MGF for $Y = X_1 + X_2$ is obtained by
+\begin{align*}
+    \begin{split}
+        M_Y(t) &= M_{X_1}(t)M_{X_2}(t) \\
+        &= \Bigg(\frac{pe^t}{1 - (1 - p)e^t}\Bigg)^{r_1} \Bigg(\frac{pe^t}{1 - (1 - p)e^t}\Bigg)^{r_2} \\
+        &= \Bigg(\frac{pe^t}{1 - (1 - p)e^t}\Bigg)^{r_1 + r_2}
+    \end{split}
+\end{align*}
+The MGF of $Y = X_1 + X_2$ is:
+\[M_Y(t) =
+\begin{cases}
+\Big(\frac{pe^t}{1 - (1 - p)e^t}\Big)^{r_1 + r_2} &\text{for $t < -\log(1-p)$} \\ \infty& \text{otherwise.}
+\end{cases}
+\]
+\begin{enumerate}[(b)]
+\item What is the distribution of $Y$?
+\end{enumerate}
+Thus we see that $Y \sim NB(r_1 +r_2, p)$.
+
+\end{itemize}
+
+\end{document}

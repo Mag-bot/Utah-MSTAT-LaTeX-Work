@@ -1,0 +1,93 @@
+\documentclass[11pt]{article}
+
+%%%%%%%%%%%%%%%%%%%
+% Page Layout
+%%%%%%%%%%%%%%%%%%%
+
+\setlength{\paperwidth}{8.5in} \setlength{\paperheight}{11in}
+\setlength{\marginparwidth}{0in} \setlength{\marginparsep}{0in}
+\setlength{\oddsidemargin}{0in} \setlength{\evensidemargin}{0in}
+\setlength{\textwidth}{6.5in} \setlength{\topmargin}{-0.5in}
+\setlength{\textheight}{9in}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Include Packages and Style Files
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[english]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{xcolor}
+\usepackage[useregional]{datetime2}
+%\usepackage[pdftex]{graphicx,color}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Define theorem environments
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem*{remark}{Remark}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Define new commands
+%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\R}{\mathbb{R}}
+
+
+\newcommand{\E}{\mathbb{E}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\1}[1]{\mathbf{1} \left \{ #1 \right \}}
+\newcommand{\Range}{\operatorname{Range}}
+
+%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\title{Homework 1}
+\date{Due: Saturday, January 30th at 11:59 PM}
+\author{Magon Bowling \\ Math 5080}
+
+\maketitle
+
+\begin{itemize}
+
+\item [{\color{red} \textbf{6.03}}] The measured radius $R$ of a circle has pdf $f(r) = 6r(1-r), 0 < r < 1$.
+\begin{enumerate}[(a)]
+\item Find the distribution of the circumference.
+
+A circumference of a circle is \(X = 2 \pi R\).  The function \(\phi(x) = 2 \pi x \) is one-to-one and is increasing on [0,1], so it maps [0,1] onto [0,2$\pi$].  It's inverse is \(\phi^{-1}(r) = \frac{x}{2\pi}\), so
+\[f_X (x) = f_X \big(\phi^{-1}(r)\big) \Big|(\phi^{-1)\prime}(r)\Big| = f_X \bigg(\frac{x}{2\pi}\bigg) \bigg|\frac{1}{2\pi}\bigg| = \frac{6x}{2\pi} \bigg(2\pi - \frac{x}{2\pi}\bigg) \bigg(\frac{1}{2\pi}\bigg)\]
+\[f_X (x) = \frac{6x(2\pi - x)}{(2\pi)^3} \{0<x<2\pi\}. \]
+
+
+\item Find the distribution of the area of the circle.
+
+The area of a circle is \(Y = \pi R^2\).  The function \(\phi(y) = \pi x^2 \) is not one-to-one, so when mapping \(x \rightarrow x^2 \pi\) it maps [0,1] onto [0,$\pi$] with each point mapped twice.  The function \(\phi(y) = \pi x^2 \) has an inverse of \(\phi^{-1}(r) = \sqrt{\frac{y}{\pi}}\), so
+\[f_Y (y) = f_Y \big(\phi^{-1}(r)\big)\Big|(\phi^{-1)\prime}(r)\Big| = f_Y \bigg(\sqrt{\frac{y}{\pi}}\bigg) \bigg|\frac{1}{2\sqrt{\pi y}}\bigg| = 6 \bigg(\sqrt{\frac{y}{\pi}}\bigg) \bigg(1 - \sqrt{\frac{y}{\pi}}\bigg) \bigg(\frac{1}{2\sqrt{\pi y}}\bigg)\]
+\[f_Y (y) = \frac{3}{\pi} \bigg(1 - \sqrt{\frac{y}{\pi}}\bigg)  \{0<y<\pi\} \]
+or
+\[f_Y (y) = \frac{3(\sqrt{\pi} - \sqrt{y})}{\pi^\frac{3}{2}}  \{0<y<\pi\}. \]
+
+\end{enumerate}
+
+\item [{\color{red} \textbf{6.13}}] Let $X$ have pdf $f(x) = x^2/24$ for $-2 < x < 4$ and assume the pdf is zero otherwise. Find the pdf of $Y = X^2$.
+
+The function \(\phi(x) = x^2\) is not one-to-one on [-2,4].  We discover that when mapping \(x \rightarrow x^2\) it maps [-2,4] onto [4,16].  It's inverse is \(\phi^{-1}(x) = \sqrt{y}\).  Thus we obtain,
+\[f_Y (y) = f_Y \big(\phi^{-1}(x)\big)\Big|(\phi^{-1)\prime}(x)\Big| = f_Y (\sqrt{y}) \bigg|\frac{1}{\sqrt{y}}\bigg| = \bigg(\frac{(\sqrt{y})^2}{24}\bigg) \bigg(\frac{1}{2\sqrt{y}}\bigg) \]
+\[f_Y (y) = \frac{\sqrt{y}}{48} \{4\leq y<16\}. \]
+
+\end{itemize}
+
+\end{document}
