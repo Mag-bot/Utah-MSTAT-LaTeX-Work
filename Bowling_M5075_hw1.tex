@@ -1,0 +1,108 @@
+\documentclass[11pt]{article}
+
+%%%%%%%%%%%%%%%%%%%
+% Page Layout
+%%%%%%%%%%%%%%%%%%%
+
+\setlength{\paperwidth}{8.5in} \setlength{\paperheight}{11in}
+\setlength{\marginparwidth}{0in} \setlength{\marginparsep}{0in}
+\setlength{\oddsidemargin}{0in} \setlength{\evensidemargin}{0in}
+\setlength{\textwidth}{6.5in} \setlength{\topmargin}{-0.5in}
+\setlength{\textheight}{9in}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Include Packages and Style Files
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[english]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{xcolor}
+\usepackage[useregional]{datetime2}
+\usepackage[pdftex]{graphicx,color}
+\usepackage{graphicx}
+\usepackage{multicol}
+\setlength{\columnsep}{1.5cm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Define theorem environments
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem*{remark}{Remark}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Define new commands
+%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\R}{\mathbb{R}}
+
+
+\newcommand{\E}{\mathbb{E}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\1}[1]{\mathbf{1} \left \{ #1 \right \}}
+\newcommand{\Range}{\operatorname{Range}}
+
+%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\title{Time Series Analysis \\ Homework 1}
+\date{Due: Friday, January 29th}
+\author{Magon Bowling \\ Math 5075}
+
+\maketitle
+
+\section{{\color{red} \textbf{Problem 1}}}
+
+\item Let $X$ and $Y$ be independent and identically distributed exponential random variables with \(EX = EY = 1\).  Compute the distribution function of \(Z = X + Y \).
+\\
+\item We are given that \(EX = EY = 1\), and we know that $EX$ of an exponential random variable is \(\frac{1}{\lambda}\). Thus, we have the random variables \(X \sim exp(1)\) and \(Y \sim exp(1)\).  Since $X$ and $Y$ are non-negative, $X + Y$ is also non-negative.  Let $Z = X + Y$, this means that \(f_Z (z) = 0\) if $z<0$.  If $z \geq 0$ then
+\[f_Z (z) = \iint f_X (x) f_Y (y) dx dy = \int_0^z \int_0^{z-x} f_X (x) f_Y (y) dx dy = \int_0^z f_X (x) f_Y (z-x) dx\]
+\[= \int_0^z e^{-x} e^{-(z-x)} dx = \int_0^z e^{-z} dx = xe^{-z}\BigZ = ze^{-z}, z>0 \]
+\\
+This identifies $Z$ as a Gamma(2,1).
+
+\section{{\color{red} \textbf{Problem 3}}}
+
+\item Let $X_1, X_2, ..., X_n$ be independent and identically distributed random variables with distribution function
+\[F(x) =
+\begin{cases}
+0&\text{, $x < 0$} \\ 1 - \frac{1}{1+x}&\text{, $x \geq 0$.}
+\end{cases}
+\]
+\[\includegraphics[width=6cm, height=2cm]{M5075/M5075_hw1_problem3.PNG}\]
+\\ Let \(X_{n,n} = max_{1 \leq i \leq n} X_i\) and \(Y_n = X_{n,n}/n\).  Show that $Y_n$ converges in distribution and determine the limit.
+\\
+\begin{align*}
+    \begin{split}
+        F_{Y_n} (x) & = F_{\frac{X_{n,n}}{n}} (x) \\
+        & = P\bigg(\frac{X_{n,n}}{n} \leq x\bigg) \\
+        & = P(X_{n,n} \leq nx) \\
+        & = P(max_{i \leq n} X_i \leq nx) \\
+        & = P(X_1 \leq nx \cap X_2 \leq nx \cap ... \cap X_n \leq nx) \\
+        & = P\Big(\cap_{i=1}^n X_i \leq nx\Big) \\
+        & = \prod_{i=1}^{n} P(X_i \leq nx) \\
+        & = P(X_i \leq nx)^n \\
+        & = F_1 (nx)^n \\
+        & = \bigg(1 - \frac{1}{1 + nx}\bigg)^n \\
+        & = \bigg(\frac{1 + nx - 1}{1 + nx} \bigg)^n \\
+        & = \bigg(\frac{nx}{1 + nx}\bigg)^n
+   \end{split}
+\end{align*}
+\\
+Now we need to show that $Y_n$ converges in distribution by taking the limit. \\
+\[ \lim_{n\to\infty} F_{Y_n} (x) = e^{\frac{1}{x}} , x \geq 0.\]
+
+\end{document}
