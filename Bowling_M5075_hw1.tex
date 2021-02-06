@@ -58,8 +58,8 @@
 
 \begin{document}
 
-\title{Time Series Analysis \\ Homework 1}
-\date{Due: Friday, January 29th}
+\title{Time Series Analysis \\ Homework 1 \Rightarrow Fix}
+\date{Due: Friday, January 29th \\ Fixed: Friday, February 5th}
 \author{Magon Bowling \\ Math 5075}
 
 \maketitle
@@ -90,7 +90,7 @@ This identifies $Z$ as a Gamma(2,1).
         F_{Y_n} (x) & = F_{\frac{X_{n,n}}{n}} (x) \\
         & = P\bigg(\frac{X_{n,n}}{n} \leq x\bigg) \\
         & = P(X_{n,n} \leq nx) \\
-        & = P(max_{i \leq n} X_i \leq nx) \\
+        & = P(\max_{i \leq n} X_i \leq nx) \\
         & = P(X_1 \leq nx \cap X_2 \leq nx \cap ... \cap X_n \leq nx) \\
         & = P\Big(\cap_{i=1}^n X_i \leq nx\Big) \\
         & = \prod_{i=1}^{n} P(X_i \leq nx) \\
@@ -103,6 +103,6 @@ This identifies $Z$ as a Gamma(2,1).
 \end{align*}
 \\
 Now we need to show that $Y_n$ converges in distribution by taking the limit. \\
-\[ \lim_{n\to\infty} F_{Y_n} (x) = e^{\frac{1}{x}} , x \geq 0.\]
+\[ \lim_{n\to\infty} F_{Y_n} (x) = e^{\frac{-1}{x}} , x \geq 0.\]
 
 \end{document}

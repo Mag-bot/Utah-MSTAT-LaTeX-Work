@@ -1,0 +1,122 @@
+\documentclass[11pt]{article}
+
+%%%%%%%%%%%%%%%%%%%
+% Page Layout
+%%%%%%%%%%%%%%%%%%%
+
+\setlength{\paperwidth}{8.5in} \setlength{\paperheight}{11in}
+\setlength{\marginparwidth}{0in} \setlength{\marginparsep}{0in}
+\setlength{\oddsidemargin}{0in} \setlength{\evensidemargin}{0in}
+\setlength{\textwidth}{6.5in} \setlength{\topmargin}{-0.5in}
+\setlength{\textheight}{9in}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Include Packages and Style Files
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[english]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{xcolor}
+\usepackage[useregional]{datetime2}
+%\usepackage[pdftex]{graphicx,color}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Define theorem environments
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem*{remark}{Remark}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Define new commands
+%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\R}{\mathbb{R}}
+
+
+\newcommand{\E}{\mathbb{E}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\1}[1]{\mathbf{1} \left \{ #1 \right \}}
+\newcommand{\Range}{\operatorname{Range}}
+\newcommand\myeq{\stackrel{\mathclap{\normalfont\mbox{iid}}}{=}}
+\newcommand\myequ{\stackrel{\mathclap{\normalfont\mbox{$P$}}}{\rightarrow}}
+
+%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\title{Time Series Analysis \\ Homework 2}
+\date{Due: Friday, February 5th}
+\author{Magon Bowling}
+
+\maketitle
+
+\section{{\color{red} \textbf{Problem 5}}}
+\item Let $X_1, X_2, ..., X_N$ be independent and identically distributed (iid) random vectors with $EX_i = 0$ and $EX_i^2 = 1$.  Compute
+\[E\Bigg(\sum_{i=1}^n \frac{1}{i} X_i\Bigg)^2\]
+and show
+\[\Bigg|\sum_{i=1}^n \frac{1}{i} X_i\Bigg| = Op(1).\]
+We know $X_i \sim \text{iid} (0,1)$, let's let
+\[Y_n = \sum_{i=1}^n \frac{1}{i} X_i = (1\cdot X_1 + \frac{1}{2}\cdot X_2 + \frac{1}{3}\cdot X_3 + ... + \frac{1}{n}\cdot X_n). \]
+We need to solve for $E[Y_n^2]$.  We compute by the following:
+\[Var(Y_n) = E(Y_n^2) - E(Y_n)^2 \Rightarrow E(Y_n^2) = E(Y_n)^2 + Var(Y_n)\]
+\[E(Y_n) = E\Bigg[\sum_{i=1}^n \frac{1}{i} X_i\Bigg] \ \myeq \ \sum_{i=1}^n \frac{1}{i} E(X_i) = 0\]
+We know that $E(X_i) = 0$, therefore, \(\sum_{i=1}^n \frac{1}{i} E(X_i) = 0\).  This leads to the understanding that $E(Y_n)^2 = 0$.  Now we solve for Var$(Y_n)$ as follows:
+\[E(Y_n^2) = 0 + \text{Var}(Y_n) = \text{Var}\Bigg[\sum_{i=1}^n \frac{1}{i} X_i\Bigg] \ \myeq \ \sum_{i=1}^n \frac{1}{i^2} \text{Var}(X_i) = \sum_{i=1}^n \frac{1}{i^2}\]
+We know that Var$(V_i) = 1$, therefore, \(\sum_{i=1}^n \frac{1}{i^2}\) is a harmonic series.  \\
+Now we show that $Y_n$ is bounded in probability using the Chebishev's Inequality.  Note: Used Wolfram Alpha calculation to find what the harmonic series converges to.
+\begin{align*}
+    \begin{split}
+        P\{|Y_n| > c\} \ &\leq \ \frac{1}{c^2} E(Y_n^2) \\
+        P\{|Y_n| > c\} \ &\leq \ \frac{1}{c^2} \Bigg(\sum_{i=1}^n \frac{1}{i^2}\Bigg)
+    \end{split}
+\end{align*}
+Now as $n \rightarrow \infty$, the series converges to $\frac{1}{c^2}\Big(\frac{\pi^2}{6}\Big)$, which means that $Y_n$ is bounded by $\frac{\pi^2}{6c^2}$.
+
+\section{{\color{red} \textbf{Problem 7}}}
+\item Let $X_1, X_2, ..., X_n$ be a sequence of random variables with $EX_i = 0$,
+\[EX_iX_j =
+\begin{cases}
+\sigma^2\text{,} \quad i=j \text{,} \\
+\rho \text{,} \quad |i - j| = 1 \text{,} \\
+0 \text{,} \quad |i - j| > 1.
+\end{cases}\]
+Compute
+\[E\Bigg(\sum_{i=1}^n X_i\Bigg)^2\]
+and show that
+\[\frac{1}{n}\sum_{i=1}^n X_i \ \myequ \ 0.\]
+\item If we let \(Y_n = \sum_{i=1}^n X_i = (X_1 + X_2 + ... + X_n)\), we want to solve for $E(Y_n^2)$ again.
+Recall from above \(\text{Var}(Y_n) = E(Y_n^2) - E(Y_n)^2\) and \(E(Y_n^2) = E(Y_n)^2 + Var(Y_n)\).  Using the same process,
+\[E(Y_n) = E\Bigg[\sum_{i=1}^n X_i\Bigg] \ \myeq \ \sum_{i=1}^n E(X_i) = 0\]
+Therefore, $E(Y_n)^2 = 0$.
+\[E(Y_n^2) = 0 + \text{Var}(Y_n) = E\Bigg[\sum_{i=1}^n \sum_{i=1}^n X_i X_j\Bigg] \ \myeq \ \sum_{i=1}^n \sum_{i=1}^n E(X_i X_j)\]
+We arrive at the following: \(E(Y_n^2) = n\sigma^2 + 2(n-1)p\).
+It is important to note that if $Y_n$ is a random sample from a distribution with a finite mean and variance, then the sequence of sample mean converges in probability to $\mu$, as follows
+\(\overline{Y}_n \myequ \mu\).
+
+\[\text{We need to show:} \ \frac{1}{n}\sum_{i=1}^n X_i \myequ 0, \quad \text{hence we start with this:} \ \frac{1}{n}\sum_{i=1}^n X_i = \overline{Y}_n.\]
+Given finite mean $0$ and variance ($\sigma^2$), we are going to use ($1$) stochastic convergence to a constant ($c$) theorem and ($2$) Chebishev's inequality.
+
+\item (1) By definition, if \(\lim_{n\rightarrow \infty} P\big[|Y_n - c| > \epsilon \big] = 0\) for all $\epsilon > 0$ the sequence has convergence in probability to $c$.
+
+\item (2) Likewise by definition, \(P\big(|\overline{Y}_n - \mu| \geq \epsilon \big) \leq \frac{\sigma^2}{\epsilon^2}\). Thus,
+\[P\big[|{Y}_n - \mu| \geq \epsilon \big] \geq 1 -  \frac{\sigma^2}{\epsilon^2} \text{ and } P\big[|\overline{Y}_n - \mu| \geq \epsilon \big] \geq 1 -  \frac{\sigma^2}{\epsilon^2 n} \text{, and } \overline{Y}_n \myequ \mu \text{ as } n \rightarrow \infty.\]
+
+As $\mu = 0$ and Var\((\overline{Y_n}) = \big(\frac{1}{n^2}\big)(n\sigma^2 + 2(n-1)p)\),
+\[P\big[|\overline{Y}_n| \geq \epsilon \big] \geq 1 - \frac{n \sigma^2 + 2(n-1)p}{\epsilon^2 n^2}.\]
+
+As \(\frac{\text{Var}(\overline{Y_n})}{n\epsilon^2} \rightarrow 0 \text{ as } n \rightarrow \infty\text{, } \overline{Y}_n \myequ \mu.\)
+
+\end{document}
