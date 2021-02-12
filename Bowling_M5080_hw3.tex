@@ -1,0 +1,172 @@
+\documentclass[11pt]{article}
+
+%%%%%%%%%%%%%%%%%%%
+% Page Layout
+%%%%%%%%%%%%%%%%%%%
+
+\setlength{\paperwidth}{8.5in} \setlength{\paperheight}{11in}
+\setlength{\marginparwidth}{0in} \setlength{\marginparsep}{0in}
+\setlength{\oddsidemargin}{0in} \setlength{\evensidemargin}{0in}
+\setlength{\textwidth}{6.5in} \setlength{\topmargin}{-0.5in}
+\setlength{\textheight}{9in}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Include Packages and Style Files
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[english]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{xcolor}
+\usepackage[useregional]{datetime2}
+\usepackage[pdftex]{graphicx,color}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Define theorem environments
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem*{remark}{Remark}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Define new commands
+%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\R}{\mathbb{R}}
+
+
+\newcommand{\E}{\mathbb{E}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\1}[1]{\mathbf{1} \left \{ #1 \right \}}
+\newcommand{\Range}{\operatorname{Range}}
+
+%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\title{Statistical Inference I \\ Homework 3}
+\date{Due: Saturday, February 13th}
+\author{Magon Bowling}
+
+\maketitle
+
+\begin{itemize}
+\item [{\color{red} \textbf{Meyer, 30.11}}] A device has two components, and the lifetimes of these components are modeled by the random variables $Y_1$ and $Y_2$. The first component cannot fail before the second component fails, and the joint distribution of $Y_1$ and $Y_2$ is determined to be
+\[
+f(y_1, y_2) = 2 e^{-y_1} e^{-y_2}, \1{0 < y_2 < y_1 < \infty}.
+\]
+The random variable $X_1 = Y_1 - Y_2$ can be interpreted as the time between failures, and $X_2 = Y_1 + Y_2$ can be interpreted as the lifetime of the device.
+\begin{enumerate}[(a)]
+\item Find the joint density of $X_1$ and $X_2$.
+\item Find the marginal density of $X_1$ and sketch it.
+\item Find the marginal density of $X_2$.
+\end{enumerate}
+\end{itemize}
+(a) To find the joint density of $X_1$ and $X_2$ we complete the following steps: \\
+\textbf{First} write relations in little variables.
+\[X_1 = Y_1 - Y_2 \Rightarrow x_1 = y_1 - y_2\]
+\[X_2 = Y_1 + Y_2 \Rightarrow x_2 = y_1 + y_2\]
+\textbf{Second} solve for $y_1, y_2$ in terms of $x_1, x_2$.
+\[x_1 = y_1 - y_2 \ (+) \ x_2 = y_1 + y_2 \Rightarrow x_1 + x_2 = 2y_1 \Rightarrow y_1 = \frac{1}{2}(x_1 + x_2)\]
+\[x_1 = y_1 + y_2 \ (-) \ x_2 = y_1 + y_2 \Rightarrow x_1 - x_2 = 2y_2 \Rightarrow y_2 = \frac{1}{2}(x_2 - x_1)\]
+\textbf{Third} compute the \textbf{Jacobian}.
+\[\textbf{J} = \text{det}\begin{pmatrix}
+\frac{\partial x_1}{\partial y_1} & \frac{\partial x_1}{\partial y_2} \\
+\frac{\partial x_2}{\partial y_1} & \frac{\partial x_2}{\partial y_2} \end{pmatrix}
+= \text{det}\begin{bmatrix}
+\frac{1}{2} & \frac{-1}{2} \\
+\frac{1}{2} & \frac{1}{2} \end{bmatrix}
+= \frac{1}{2}\left(\frac{1}{2}\right) - \frac{1}{2}\left(\frac{-1}{2}\right) = \frac{1}{4} - \left(\frac{-1}{4}\right) = \frac{1}{2}\]
+\textbf{Fourth} then find the formula in terms of $f_{Y_1,Y_2}$.
+\begin{align*}
+    f_{(X_1,X_2)} (x_1,x_2) &= f_{(Y_1,Y_2)} (y_1,y_2)|\textbf{J}| \\
+    &= \left|\frac{1}{2}\right| 2 e^{-\left(\frac{1}{2}(x_1 + x_2)\right)} e^{-\left(\frac{1}{2}(x_2 - x_1)\right)}, \1{0 < \frac{1}{2}(x_2 - x_1) < \frac{1}{2}(x_1 + x_2) < \infty} \\
+    &= exp\{-\frac{1}{2}x_1 - \frac{1}{2}x_2 -\frac{1}{2}x_2 + \frac{1}{2}x_1\}, \1{0 < x_2 - x_1 < x_1 + x_2 < \infty} \\ &= e^{-x_2}, \1{0 < x_1 < x_2 < \infty}
+\end{align*}
+
+(b) To find the marginal density of $X_1$ we integrate out $x_2$: \\
+\begin{minipage}{0.6\linewidth}
+    \begin{align*}
+        f_{X_1} (x_1) &= \int_{x_1}^{\infty} e^{-x_2} dx_2 \\
+        &= -e^{-x_2} \Big|_{x_1}^{\infty} \\
+        &= 0 - (-e^{-x_1}) \\
+        &= e^{-x_1}, x_1 > 0
+    \end{align*}
+\end{minipage}
+\begin{minipage}{0.4\linewidth}
+    \includegraphics[width=5cm]{Images/f(x_1) = e^-x_1.PNG}
+\end{minipage} \\
+\\
+(c) To find the marginal density of $X_2$ we integrate out $x_1$: \\
+\begin{minipage}{0.6\linewidth}
+    \begin{align*}
+        f_{X_2} (x_2) &= \int_0^{x_2} e^{-x_2} dx_1 \\
+        &= e^{-x_2} x_1 \Big|_0^{x_2} \\
+        &= x_2 e^{-x_2} - 0 \\
+        &= x_2 e^{-x_2}, x_2 > 0
+    \end{align*}
+\end{minipage}
+\begin{minipage}{0.4\linewidth}
+    \includegraphics[width=5cm]{Images/f(x_2) = x_2 e^-x_2.PNG}
+\end{minipage} \\
+
+\begin{itemize}
+\item [{\color{red} \textbf{Meyer, 30.9}}] The lifetimes $Y_1$ and $Y_2$ of two components of a device are jointly distributed as
+\[
+f(y_1, y_2) = \frac{1}{8} y_1 e^{-(y_1 + y_2)/2} \1{y_1 > 0, y_2 > 0}.
+\]
+\begin{enumerate}[(a)]
+\item Find $\P(Y_1 > 1, Y_2 > 1)$.
+\item Are $Y_1$ and $Y_2$ independent random variables? Explain why or why not.
+\item Find the marginal density of $Y_1$.
+\end{enumerate}
+\end{itemize}
+(a) To find $\P(Y_1 > 1, Y_2 > 1)$ we integrate on the interval $[1,\infty]$.
+\begin{align*}
+    \P(Y_1 > 1, Y_2 > 1) &= \int_1^{\infty} \int_1^{\infty} \frac{1}{8} y_1 e^{-(y_1 + y_2)/2} dy_1 dy_2 \\
+    &= \int_1^{\infty} \int_1^{\infty} \frac{1}{8} y_1 e^{-y_1/2} e^{-y_2/2} dy_1 dy_2 \\
+    &= \int_1^{\infty} \frac{1}{4} y_1 e^{-y_1/2} dy_1 \int_1^{\infty} \frac{1}{2} e^{-y_2/2} dy_2 \\
+    &= \left(\frac{1}{2} y_1 e^{-y_1/2} \Big|_1^{\infty} - e^{-y_1/2} \Big|_1^{\infty}\right) \left(-e^{-y_2/2} \Big|_1^{\infty}\right) \\
+    &= \left[0 - \left(\frac{-1}{2} e^{\frac{-1}{2}}\right) - \left(0 - \left(e^\frac{-1}{2}\right)\right)\right] \left(0 - \left(-e^\frac{-1}{2}\right)\right) \\
+    &= \left(\frac{1}{2} e^{\frac{-1}{2}} + e^{\frac{-1}{2}}\right)\left(e^{\frac{-1}{2}}\right) \\
+    &= \left(\frac{3}{2} e^{\frac{-1}{2}}\right)\left(e^{\frac{-1}{2}}\right) \\
+    &= \frac{3}{2e}
+\end{align*}
+(b) To determine if $Y_1$ and $Y_2$ are independent, we need the product of the marginal densities to equal the joint density.  I will prove this hereafter.  We can also prove this by showing that the joint density can factor into a function of two marginal densities as indicated above in our integration.  Therefore, $Y_1$ and $Y_2$ are independent. \\
+(c) To find the marginal of $Y_1$ we integrate out $y_2$:
+\begin{align*}
+    f_{Y_1} (y_1) &= \int_0^{\infty} \frac{1}{8} y_1 e^{-(y_1 + y_2)/2} dy_2 \\
+    &= \frac{1}{4} y_1 e^{-y_1/2} \int_0^{\infty} \frac{1}{2} e^{-y_2/2} dy_2 \\
+    &= \frac{1}{4} y_1 e^{-y_1/2} \left(-e^{-y_2/2} \Big|_0^{\infty} \right) \\
+    &= \frac{1}{4} y_1 e^{-y_1/2} (0 - (-1)) \\
+    &= \frac{1}{4} y_1 e^{-y_1/2}, \1{y_1 >0}
+\end{align*}
+
+To find the marginal of $Y_2$ we integrate out $y_1$:
+\begin{align*}
+    f_{Y_2} (y_2) &= \int_0^{\infty} \frac{1}{8} y_1 e^{-(y_1 + y_2)/2} dy_1 \\
+    &= \frac{1}{2} e^{-y_2/2} \int_0^{\infty} \frac{1}{4} y_1 e^{-y_1/2} dy_1 \\
+    &= \frac{1}{2} e^{-y_2/2} \left(\frac{1}{2} y_1 e^{-y_1/2} \Big|_0^{\infty} - e^{-y_1/2} \Big|_0^{\infty} \right) \\
+    &= \frac{1}{2} e^{-y_2/2} (0 - (0 - (1))) \\
+    &= \frac{1}{2} e^{-y_2/2}, \1{y_2 >0}
+\end{align*}
+To prove independence further,
+\begin{align*}
+    f_{Y_1,Y_2} (y_1, y_2) &= f_{Y_1} (y_1) f_{Y_2} (y_2) \\
+    \frac{1}{8} y_1 e^{-(y_1 + y_2)/2} &= \left(\frac{1}{4} y_1 e^{-y_1/2}\right) \left(\frac{1}{2} e^{-y_2/2}\right) \\
+    \frac{1}{8} y_1 e^{-(y_1 + y_2)/2} &= \frac{1}{8} y_1 e^{-y_1/2} e^{-y_2/2} \\
+    \frac{1}{8} y_1 e^{-(y_1 + y_2)/2} &= \frac{1}{8} y_1 e^{-(y_1 + y_2)/2}.
+\end{align*}
+
+\end{document}
