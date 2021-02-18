@@ -1,0 +1,113 @@
+\documentclass[11pt]{article}
+
+%%%%%%%%%%%%%%%%%%%
+% Page Layout
+%%%%%%%%%%%%%%%%%%%
+
+\setlength{\paperwidth}{8.5in} \setlength{\paperheight}{11in}
+\setlength{\marginparwidth}{0in} \setlength{\marginparsep}{0in}
+\setlength{\oddsidemargin}{0in} \setlength{\evensidemargin}{0in}
+\setlength{\textwidth}{6.5in} \setlength{\topmargin}{-0.5in}
+\setlength{\textheight}{9in}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Include Packages and Style Files
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[english]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumerate}
+%\usepackage{xcolor}
+\usepackage[useregional]{datetime2}
+\usepackage[pdftex]{graphicx,color}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Define theorem environments
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem*{remark}{Remark}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Define new commands
+%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\R}{\mathbb{R}}
+
+
+\newcommand{\E}{\mathbb{E}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\1}[1]{\mathbf{1} \left \{ #1 \right \}}
+\newcommand{\Range}{\operatorname{Range}}
+
+%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\title{Statistical Inference I \\ Homework 4}
+\date{Due: Saturday, February 20th}
+\author{Magon Bowling}
+
+\maketitle
+
+\begin{itemize}
+\item [{\color{red} \textbf{7.9}}] Let $X_1, \ldots, X_{100}$ be iid Exponential$(1)$ random variables and let $Y = X_1 + \ldots + X_{100}$.
+\begin{enumerate}[(a)]
+\item Use normal approximation to estimate $\P(Y > 110)$.
+\item Use normal approximation to estimate $\P(1.1 < \overline{X} < 1.2)$, where $\overline{X}$ is the sample mean.
+\end{enumerate}
+\end{itemize}
+(a) The sum $S_{100}$ will be approximately normally distributed with mean $1 \cdot 100 = 100$ and variance $1 \cdot \sqrt{100} = 10$.  Thus
+\[\P(Y > 110) = \P(S_{100} > 110) = \P\left(\frac{S_{100} - n\mu}{\sigma \sqrt{n}} > \frac{110 - 100}{\sqrt{100}}\right) = \P(Z > 1)\]
+where $Z \sim N(0,1)$.  We know that $\P(Z > 1) = 1 - \P(Z < 1)$, and using \texttt{pnorm(1)} in \texttt{R}, we get
+\[1 - \P(Z < 1) = 1 - 0.8413 \approx 0.1587.\]
+(b) To find the $\P(1.1 < \overline{X} < 1.2)$, we have
+\[\P(1.1 < \overline{X} < 1.2) = \P\left(1.1 < \frac{Y}{100} < 1.2\right) = \P(110 < Y < 120).\]
+We can then use the same calculations as we did in (a) and get
+\[\P(110 < S_{100} < 120) = \P\left(\frac{110 - 100}{\sqrt{100}} < \frac{S_{100} - n\mu}{\sigma \sqrt{n}} < \frac{120 - 100}{\sqrt{100}}\right) = \P(1 < Z < 2)\]
+where $Z \sim N(0,1)$.  In \texttt{R} we can simply calculate $\texttt{pnorm(2)} - \texttt{pnorm(1)}$ and get
+\[0.97725 - 0.84134 \approx 0.1359.\]
+
+
+\begin{itemize}
+\item[{\color{red} \textbf{7.11}}] Let $X_1, \ldots, X_{20}$ be iid Uniform$(0,1)$. Find normal approximations for
+\begin{enumerate}[(a)]
+\item $\P \left( \sum_{i=1}^{20} X_i \leq 12 \right)$,
+\item the 90th percentile of $\sum_{i=1}^{20} X_i$.
+\end{enumerate}
+\end{itemize}
+(a) From class, we discovered that $S_n \sim U\left(\frac{n}{2}, \frac{n}{12}\right)$.  Since the sum is $S_{20} \sim U\left(10, \frac{5}{3}\right)$, we know $S_{20} \approx 10 + \sqrt{\frac{5}{3}}Z$ where $Z \sim N(0,1)$.  Thus
+\begin{align*}
+    \P\left(\sum_{i=1}^{20} X_i \leq 12\right) = \P\left(S_{20} \leq 12\right) &= \P\left(10 + \sqrt{\frac{5}{3}}Z \leq 12\right) \\
+    &= \P\left(Z \leq \frac{12 - 10}{\sqrt{\frac{5}{3}}}\right) \\
+    &= \P\left(Z \leq \frac{2}{\sqrt{\frac{5}{3}}}\right) \\
+    &= \P(Z \leq 1.54919)
+\end{align*}
+Using \texttt{pnorm(1.54919)} in \texttt{R}, we get
+\[\P(Z \leq 1.54919) \approx 0.9393\]
+(b) Using the \texttt{qnorm(0.9)} in \texttt{R}, we know that the $90$th percentile approximates to $1.281552$.  Let $Z_{0.9} = 1.281552$ and $P_{0.9}$ represent the value where the probability is the $90$th percentile, we show
+\begin{align*}
+    \P\left(S_{20} \leq P_{0.9}\right) &= \P\left(10 + \sqrt{\frac{5}{3}}Z \leq P_{0.9}\right) \\
+    &= \P\left(Z \leq \frac{P_{0.9} - 10}{\sqrt{\frac{5}{3}}}\right)
+\end{align*}
+Thus
+\begin{align*}
+    \frac{P_{0.9} - 10}{\sqrt{\frac{5}{3}}} &\approx Z_{0.9} \\
+    \Rightarrow \frac{P_{0.9} - 10}{\sqrt{\frac{5}{3}}} &= 1.281552 \\
+    \Rightarrow P_{0.9} - 10 &\approx 1.65448 \\
+    \Rightarrow P_{0.9} &\approx 11.7.
+\end{align*}
+
+
+\end{document}
