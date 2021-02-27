@@ -1,0 +1,122 @@
+\documentclass[11pt]{article}
+
+%%%%%%%%%%%%%%%%%%%
+% Page Layout
+%%%%%%%%%%%%%%%%%%%
+
+\setlength{\paperwidth}{8.5in} \setlength{\paperheight}{11in}
+\setlength{\marginparwidth}{0in} \setlength{\marginparsep}{0in}
+\setlength{\oddsidemargin}{0in} \setlength{\evensidemargin}{0in}
+\setlength{\textwidth}{6.5in} \setlength{\topmargin}{-0.5in}
+\setlength{\textheight}{9in}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Include Packages and Style Files
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[english]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumerate}
+%\usepackage{xcolor}
+\usepackage[useregional]{datetime2}
+\usepackage[pdftex]{graphicx,color}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Define theorem environments
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem*{remark}{Remark}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Define new commands
+%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\R}{\mathbb{R}}
+
+
+\newcommand{\E}{\mathbb{E}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\1}[1]{\mathbf{1} \left \{ #1 \right \}}
+\newcommand{\Range}{\operatorname{Range}}
+
+%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\title{Statistical Inference I \\ Homework 5}
+\date{Due: Saturday, February 27th}
+\author{Magon Bowling}
+
+\maketitle
+
+\begin{itemize}
+\item [{\color{red} \textbf{8.9}}] Supposes that $X \sim \chi^2(m), \ S = X+Y \sim \chi^2(m+n)$, and $X$ and $Y$ are independent. Is $S - X \sim \chi^2(n)$?
+\end{itemize}
+We know \(S = X+Y \sim \chi^2(m+n)\) and because $X$ and $Y$ are independent we have
+\[M_S (t) = M_{X+Y} (t) = M_X (t) M_Y (t).\]
+We can further say that because $X \sim \chi^2(m)$ and $X+Y \sim \chi^2(m+n)$ that
+\[M_S (t) = (1-2t)^{\frac{-(m+n)}{2}} = (1-2t)^{\frac{-m}{2}} (1-2t)^{\frac{-n}{2}} = M_X (t) M_Y (t) = M_{X+Y} (t) = M_S (t).\]
+We have shown that $Y \sim \chi^2(n)$ and we know
+\[M_Y (t) = M_{X+Y-X} (t) = M_{S-X} (t),\]
+therefore
+\[S - X \sim \chi^2(n).\]
+
+\begin{itemize}
+\item [{\color{red} \textbf{8.14}}] If $T \sim t(\nu)$, give the distribution of $T^2$.
+\end{itemize}
+We know that for $T \sim t(\nu)$ we have
+\[T = \frac{Z}{\sqrt{V/\nu}}\]
+where $Z \sim N(0,1)$ and $V \sim \chi^2(\nu)$ is independent of $Z$.  Now if we square both sides we get
+\[T^2 = \left(\frac{Z}{\sqrt{V/\nu}}\right)^2 = \frac{Z^2}{V/\nu}.\]
+We also know that $Z^2 \sim \chi^2(1)$, thus we have
+\[\frac{Z^2}{V/\nu} = \frac{\chi^2 (1)}{V/\nu} = \frac{\chi^2 (1)/1}{V/\nu}.\]
+By definition of $F$ distribution, $T^2 \sim F(1,\nu)$.
+
+\begin{itemize}
+\item [{\color{red} \textbf{8.19}}] If $T \sim t(1)$ then show the following:
+\begin{enumerate}[(a)]
+\item The CDF of $T$ is $F(t) = 1/2 + 1/\pi\arctan (t)$.
+\item The $100 \times \gamma$th percentile is $t_{\gamma}(1) = \tan[\pi (\gamma - 1/2)]$.
+\end{enumerate}
+\end{itemize}
+(a) To find the CDF of $T$, we integrate the pdf as follows:
+\begin{equation*}
+    \begin{split}
+        f_T (t;\nu) &= \int_{-\infty}^t \frac{\Gamma\left(\frac{\nu+1}{2}\right)}{\Gamma\left(\frac{\nu}{2}\right)} \frac{1}{\sqrt{\nu\pi}} \left(1+\frac{t^2}{\nu}\right)^{-(v+1)/2} dt \\
+        f_T (t;1) &= \int_{-\infty}^t \frac{\Gamma\left(\frac{2}{2}\right)}{\Gamma\left(\frac{1}{2}\right)} \frac{1}{\sqrt{\pi}} \left(1+\frac{t^2}{1}\right)^{-2/2} dt \\
+        &= \int_{-\infty}^t \frac{1}{\sqrt{\pi}} \frac{1}{\sqrt{\pi}} \left(1+t^2\right)^{-1} dt \\
+        &= \int_{-\infty}^t \left(\frac{1}{\sqrt{\pi}}\right)^2 \left(\frac{1}{1+t^2}\right) dt \\
+        &= \frac{1}{\pi} \int_{-\infty}^t \frac{1}{1+t^2} dt \\
+        &= \frac{1}{\pi}\left(\tan^{-1}\Big|_{-\infty}^t\right) \\
+        &= \frac{1}{\pi}\left(\tan^{-1}(t) - \tan^{-1}(-\infty)\right) \\
+        &= \frac{1}{\pi}\left(\tan^{-1}(t)\right) - \frac{1}{\pi}\left(-\frac{\pi}{2}\right) \\
+        &= \frac{1}{2} + \frac{1}{\pi}\arctan (t)
+    \end{split}
+\end{equation*}
+(b) Now that we have the CDF of $T$, we can use that to find the $100 \times \gamma$th percentile to be $t_{\gamma}(1) = \tan[\pi (\gamma - 1/2)]$.  An arbitrary $100 \times \gamma$th percentile is defined by
+\[\P\left(T \leq t_{\gamma}(1)\right) = \gamma \Longrightarrow F_T \left(t_{\gamma}(1)\right) = \gamma.\]
+We can now substitute in the CDF of $T$ and solve for the arbitrary $t_{\gamma}(1)$ as follows:
+\begin{equation*}
+    \begin{split}
+        \frac{1}{2} + \frac{1}{\pi} \arctan \left(t_{\gamma} (1)\right) &= \gamma \\
+        \frac{1}{\pi} \arctan \left(t_{\gamma} (1)\right) &= \gamma - \frac{1}{2} \\
+        \arctan \left(t_{\gamma} (1)\right) &= \pi\left(\gamma - \frac{1}{2}\right) \\
+        t_{\gamma} (1) &= \tan\left[\pi\left(\gamma - \frac{1}{2}\right)\right]
+    \end{split}
+\end{equation*}
+Thus, the $100 \times \gamma$th percentile to be $t_{\gamma}(1) = \tan[\pi (\gamma - 1/2)]$.
+
+
+\end{document}
